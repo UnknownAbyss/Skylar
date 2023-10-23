@@ -1,0 +1,7 @@
+# Godot 4+ specific ignores
+.godot/
+skylar/target
+skylar/Cargo.lock
+assets/krita
+assets/sprites/*.import
+assets/sprites/*~

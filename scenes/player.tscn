@@ -1,0 +1,140 @@
+[gd_scene load_steps=19 format=3 uid="uid://b01fjwmxk8ipj"]
+
+[ext_resource type="Script" path="res://scripts/Player/Player.gd" id="1_dedp2"]
+[ext_resource type="Texture2D" uid="uid://ck5cdh1fc8fex" path="res://assets/sprites/player.png" id="2_xqimf"]
+[ext_resource type="Script" path="res://scripts/attack.gd" id="3_3o75v"]
+[ext_resource type="Script" path="res://scripts/States/FSM.gd" id="4_u7hbb"]
+[ext_resource type="Script" path="res://scripts/States/PlayerIdle.gd" id="5_b0b82"]
+[ext_resource type="Script" path="res://scripts/States/PlayerWalk.gd" id="6_rxsv6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_udiwo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1luo0"]
+atlas = ExtResource("2_xqimf")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bojl5"]
+atlas = ExtResource("2_xqimf")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_take1"]
+atlas = ExtResource("2_xqimf")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0uctm"]
+atlas = ExtResource("2_xqimf")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01wnq"]
+atlas = ExtResource("2_xqimf")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2lr0"]
+atlas = ExtResource("2_xqimf")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vsi0"]
+atlas = ExtResource("2_xqimf")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sgqgv"]
+atlas = ExtResource("2_xqimf")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvk7p"]
+atlas = ExtResource("2_xqimf")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqrr0"]
+atlas = ExtResource("2_xqimf")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oi7vj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1luo0")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bojl5")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_take1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0uctm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_01wnq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2lr0")
+}],
+"loop": true,
+"name": &"walk_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1vsi0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sgqgv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jvk7p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqrr0")
+}],
+"loop": true,
+"name": &"walk_up",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(352, 288)
+script = ExtResource("1_dedp2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_udiwo")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.78, 0.78)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(1.90735e-06, 1.90735e-06)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_oi7vj")
+animation = &"walk_down"
+
+[node name="Attack" type="Node2D" parent="."]
+position = Vector2(0, -1)
+script = ExtResource("3_3o75v")
+
+[node name="FSM" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("4_u7hbb")
+initial_state = NodePath("PlayerWalk")
+
+[node name="PlayerIdle" type="Node" parent="FSM" node_paths=PackedStringArray("player")]
+script = ExtResource("5_b0b82")
+player = NodePath("../..")
+
+[node name="PlayerWalk" type="Node" parent="FSM" node_paths=PackedStringArray("player")]
+script = ExtResource("6_rxsv6")
+player = NodePath("../..")
+
+[connection signal="atkdone" from="Attack" to="." method="_on_attack_atkdone"]

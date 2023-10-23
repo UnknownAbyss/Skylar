@@ -1,0 +1,114 @@
+[gd_scene load_steps=9 format=3 uid="uid://cmiju8ntpv4v0"]
+
+[ext_resource type="Texture2D" uid="uid://b7mo46jbee2us" path="res://assets/sprites/sword.png" id="1_6im7w"]
+[ext_resource type="Script" path="res://scripts/swordatk.gd" id="2_8ikjg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b2yak"]
+atlas = ExtResource("1_6im7w")
+region = Rect2(16, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7dubb"]
+atlas = ExtResource("1_6im7w")
+region = Rect2(16, 16, 48, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3q3be"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b2yak")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7dubb")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_e8u3v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.57079]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(11.75, 6)]
+}
+
+[sub_resource type="Animation" id="Animation_emeb4"]
+resource_name = "swing"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1.57079, 0.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(11.75, 6), Vector2(-14.25, 6)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_beri3"]
+_data = {
+"RESET": SubResource("Animation_e8u3v"),
+"swing": SubResource("Animation_emeb4")
+}
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+texture_filter = 1
+position = Vector2(161, 96)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_3q3be")
+frame = 2
+frame_progress = 1.0
+script = ExtResource("2_8ikjg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(11.75, 6)
+rotation = 1.57079
+texture = ExtResource("1_6im7w")
+hframes = 4
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_beri3")
+}
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
