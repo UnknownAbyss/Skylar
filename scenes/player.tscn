@@ -2,12 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/Player/Player.gd" id="1_dedp2"]
 [ext_resource type="Texture2D" uid="uid://ck5cdh1fc8fex" path="res://assets/sprites/player.png" id="2_xqimf"]
-[ext_resource type="Script" path="res://scripts/attack.gd" id="3_3o75v"]
+[ext_resource type="Script" path="res://scripts/Player/PlayerIdle.gd" id="4_h4anu"]
 [ext_resource type="Script" path="res://scripts/States/FSM.gd" id="4_u7hbb"]
-[ext_resource type="Script" path="res://scripts/States/PlayerIdle.gd" id="5_b0b82"]
-[ext_resource type="Script" path="res://scripts/States/PlayerWalk.gd" id="6_rxsv6"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_udiwo"]
+[ext_resource type="Script" path="res://scripts/Player/PlayerWalk.gd" id="5_ntgac"]
+[ext_resource type="Script" path="res://scripts/Player/PlayerAtk.gd" id="6_anw3x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1luo0"]
 atlas = ExtResource("2_xqimf")
@@ -102,12 +100,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h5fiy"]
+
 [node name="Player" type="CharacterBody2D"]
+y_sort_enabled = true
 position = Vector2(352, 288)
 script = ExtResource("1_dedp2")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_udiwo")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.78, 0.78)
@@ -119,22 +117,25 @@ texture_filter = 1
 position = Vector2(1.90735e-06, 1.90735e-06)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_oi7vj")
-animation = &"walk_down"
+animation = &"walk_up"
 
-[node name="Attack" type="Node2D" parent="."]
-position = Vector2(0, -1)
-script = ExtResource("3_3o75v")
+[node name="PlayerCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, 16)
+scale = Vector2(2.38364, 1.72909)
+shape = SubResource("RectangleShape2D_h5fiy")
 
 [node name="FSM" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("4_u7hbb")
-initial_state = NodePath("PlayerWalk")
+initial_state = NodePath("PlayerIdle")
 
 [node name="PlayerIdle" type="Node" parent="FSM" node_paths=PackedStringArray("player")]
-script = ExtResource("5_b0b82")
+script = ExtResource("4_h4anu")
 player = NodePath("../..")
 
 [node name="PlayerWalk" type="Node" parent="FSM" node_paths=PackedStringArray("player")]
-script = ExtResource("6_rxsv6")
+script = ExtResource("5_ntgac")
 player = NodePath("../..")
 
-[connection signal="atkdone" from="Attack" to="." method="_on_attack_atkdone"]
+[node name="PlayerAtk" type="Node" parent="FSM" node_paths=PackedStringArray("player")]
+script = ExtResource("6_anw3x")
+player = NodePath("../..")
