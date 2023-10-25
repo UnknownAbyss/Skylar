@@ -2,7 +2,7 @@ extends Weapon
 class_name Sword
 
 @export var sword_id = 0
-@export var attack_speed = 3
+@export var attack_speed = 1
 
 
 func _ready():

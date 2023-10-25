@@ -37,7 +37,7 @@ position = Vector2(559, 359)
 position = Vector2(418, 226)
 
 [node name="Dummy2" parent="." instance=ExtResource("3_08lni")]
-position = Vector2(418, 288)
+position = Vector2(418, 290)
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -10

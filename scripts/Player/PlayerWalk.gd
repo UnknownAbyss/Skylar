@@ -1,34 +1,35 @@
 extends State
 class_name PlayerWalk
 
-@export var player: CharacterBody2D
+@export var player: Player
 @export var movespd := 250.0
+@export var move_hindrance := 100.0
 
 
-func Update(_delta):
-	var facing = player.input_direction
-	var anim = player.get_node("Sprite")
+func Update(delta):
+	var facing = player.controls.input_direction
 
-	if facing.y < 0:
-		anim.play("walk_up")
+	if player.alert_mode > 0:
+		player.alert_mode -= delta
+		player.sprite_dir(player.get_mouse_dir(), "walk_up", "walk_down", -1)
 	else:
-		anim.play("walk_down")
+		player.sprite_dir(facing, "walk_up", "walk_down")
 
-	if facing.x < 0:
-		anim.flip_h = true
-	else:
-		anim.flip_h = false
 
-	if Input.is_action_just_pressed("ui_select"):
+	if player.controls.attack:
 		Transitioned.emit(self, "PlayerAtk")
 
 
 func Physics_Update(_delta):
-	var dir = player.input_direction
+	var dir = player.controls.input_direction
 
 	if dir.length() > 0:
 		player.facing = dir
 	else:
 		Transitioned.emit(self, "PlayerIdle")
+	
+	if player.alert_mode > 0 && dir.dot(player.get_mouse_dir()) < 0:
+		player.velocity = dir * (movespd - move_hindrance)
+	else:
+		player.velocity = dir * movespd
 
-	player.velocity = dir * movespd

@@ -1,29 +1,20 @@
 extends State
 class_name PlayerIdle
 
-@export var player: CharacterBody2D
+@export var player: Player
 
 
 func Enter():
-	var facing = player.facing
-	var anim = player.get_node("Sprite")
+	var facing = player.controls.input_direction
 
-	if facing.y < 0:
-		anim.play("idle_up")
-	else:
-		anim.play("idle_down")
-
-	if facing.x < 0:
-		anim.flip_h = true
-	else:
-		anim.flip_h = false
+	player.sprite_dir(facing, "idle_up", "idle_down")
 
 	player.velocity = Vector2.ZERO
 
 
 func Update(_delta):
-	if player.input_direction.length() > 0:
+	if player.controls.input_direction.length() > 0:
 		Transitioned.emit(self, "PlayerWalk")
 
-	if Input.is_action_just_pressed("ui_select"):
+	if player.controls.attack:
 		Transitioned.emit(self, "PlayerAtk")
