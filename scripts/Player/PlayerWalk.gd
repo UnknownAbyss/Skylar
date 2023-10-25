@@ -8,10 +8,12 @@ class_name PlayerWalk
 
 func Update(delta):
 	var facing = player.controls.input_direction
+	var mouse = player.get_mouse_dir()
+
 
 	if player.alert_mode > 0:
 		player.alert_mode -= delta
-		player.sprite_dir(player.get_mouse_dir(), "walk_up", "walk_down", -1)
+		player.sprite_dir(mouse, "walk_up", "walk_down", -1 if facing.dot(mouse) < 0 else 1)
 	else:
 		player.sprite_dir(facing, "walk_up", "walk_down")
 
