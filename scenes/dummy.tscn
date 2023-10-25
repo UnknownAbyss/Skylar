@@ -1,11 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxkaylu0tx7x8"]
+[gd_scene load_steps=8 format=3 uid="uid://bxkaylu0tx7x8"]
 
 [ext_resource type="Script" path="res://scripts/Entity/Dummy.gd" id="1_j7whe"]
-[ext_resource type="Script" path="res://scripts/Entity/Entity.gd" id="2_pif5m"]
 [ext_resource type="Texture2D" uid="uid://dgoglntbg32u2" path="res://assets/sprites/dummy.png" id="2_ycy7e"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ie50l"]
-size = Vector2(12.5745, 21.1672)
 
 [sub_resource type="Animation" id="Animation_qp2rf"]
 length = 0.001
@@ -71,19 +67,11 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_02x6t"]
 size = Vector2(31.7528, 15.8764)
 
-[node name="Dummy" type="StaticBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ie50l"]
+size = Vector2(12.5745, 21.1672)
+
+[node name="Dummy" type="Area2D"]
 script = ExtResource("1_j7whe")
-
-[node name="Entity" type="Area2D" parent="." node_paths=PackedStringArray("root")]
-position = Vector2(-0.831116, 0)
-script = ExtResource("2_pif5m")
-root = NodePath("..")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Entity"]
-position = Vector2(1.3764, -1.35058)
-scale = Vector2(3.59831, 2.39526)
-shape = SubResource("RectangleShape2D_ie50l")
-debug_color = Color(0.807843, 0.384314, 0.415686, 0.419608)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -101,3 +89,11 @@ libraries = {
 position = Vector2(-0.83112, 16)
 scale = Vector2(2.01557, 2.01557)
 shape = SubResource("RectangleShape2D_02x6t")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0.545284, -1.35058)
+scale = Vector2(3.59831, 2.39526)
+shape = SubResource("RectangleShape2D_ie50l")
+debug_color = Color(0.807843, 0.384314, 0.415686, 0.419608)

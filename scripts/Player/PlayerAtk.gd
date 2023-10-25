@@ -5,7 +5,7 @@ class_name PlayerAtk
 @export var LEAP_DURATION = 0.15
 @export var LEAP_SPEED = 150
 @export var ALERT_DURATION = 1
-var sword = preload("res://scripts/Weapons/Sword/Sword.tscn")
+var sword = preload("res://scenes/Sword.tscn")
 
 var sword_inst: Node2D
 var anim_player: AnimationPlayer

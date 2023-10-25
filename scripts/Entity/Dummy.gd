@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends Entity
 class_name Dummy
 
 	
@@ -6,4 +6,3 @@ func WeaponHit():
 	var anim = get_node("AnimationPlayer")
 	anim.stop()
 	anim.play("hit")
-			
