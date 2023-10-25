@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=3 uid="uid://b01fjwmxk8ipj"]
 
 [ext_resource type="Script" path="res://scripts/Player/Player.gd" id="1_dedp2"]
-[ext_resource type="Texture2D" uid="uid://ck5cdh1fc8fex" path="res://assets/sprites/player.png" id="2_xqimf"]
+[ext_resource type="Texture2D" uid="uid://cgf0qbv6k1h16" path="res://assets/sprites/player.png" id="2_xqimf"]
 [ext_resource type="Script" path="res://scripts/Player/PlayerIdle.gd" id="4_h4anu"]
 [ext_resource type="Script" path="res://scripts/States/FSM.gd" id="4_u7hbb"]
 [ext_resource type="Script" path="res://scripts/Player/PlayerWalk.gd" id="5_ntgac"]
@@ -102,7 +102,7 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h5fiy"]
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 y_sort_enabled = true
 position = Vector2(352, 288)
 script = ExtResource("1_dedp2")

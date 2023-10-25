@@ -1,14 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://bxkaylu0tx7x8"]
+[gd_scene load_steps=10 format=3 uid="uid://bxkaylu0tx7x8"]
 
 [ext_resource type="Script" path="res://scripts/Entity/Dummy.gd" id="1_j7whe"]
-[ext_resource type="Texture2D" uid="uid://dgoglntbg32u2" path="res://assets/sprites/dummy.png" id="2_ycy7e"]
+[ext_resource type="Shader" path="res://shaders/Whiten.gdshader" id="2_eioqn"]
+[ext_resource type="Texture2D" uid="uid://d02s6imnq4sb8" path="res://assets/sprites/dummy.png" id="2_ycy7e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cjii5"]
+shader = ExtResource("2_eioqn")
+shader_parameter/active = false
 
 [sub_resource type="Animation" id="Animation_qp2rf"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprite2D:position")
+tracks/0/path = NodePath("../Sprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -20,7 +25,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../Sprite2D:skew")
+tracks/1/path = NodePath("../Sprite:skew")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -36,7 +41,7 @@ length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprite2D:skew")
+tracks/0/path = NodePath("../Sprite:skew")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -48,7 +53,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../Sprite2D:position")
+tracks/1/path = NodePath("../Sprite:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -73,8 +78,9 @@ size = Vector2(12.5745, 21.1672)
 [node name="Dummy" type="Area2D"]
 script = ExtResource("1_j7whe")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="."]
 texture_filter = 1
+material = SubResource("ShaderMaterial_cjii5")
 position = Vector2(0.831117, -7.48179e-07)
 scale = Vector2(4, 4)
 texture = ExtResource("2_ycy7e")

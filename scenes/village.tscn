@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0mjg2mpx5npw"]
+[gd_scene load_steps=7 format=3 uid="uid://b0mjg2mpx5npw"]
 
 [ext_resource type="PackedScene" uid="uid://b01fjwmxk8ipj" path="res://scenes/player.tscn" id="1_jirua"]
-[ext_resource type="Texture2D" uid="uid://bijwbhprbx1xv" path="res://assets/sprites/grass.png" id="2_2dfnl"]
+[ext_resource type="Texture2D" uid="uid://cdrqlqoguwgrf" path="res://assets/sprites/grass.png" id="2_2dfnl"]
 [ext_resource type="PackedScene" uid="uid://bxkaylu0tx7x8" path="res://scenes/dummy.tscn" id="3_08lni"]
+[ext_resource type="PackedScene" uid="uid://brf7s4ojw8xi0" path="res://scenes/enemy.tscn" id="4_3qn2d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gxxqb"]
 texture = ExtResource("2_2dfnl")
@@ -28,7 +29,7 @@ sources/1 = SubResource("TileSetAtlasSource_gxxqb")
 
 [node name="Village" type="Node2D"]
 y_sort_enabled = true
-position = Vector2(-2, -2)
+position = Vector2(-36, 81)
 
 [node name="Player" parent="." instance=ExtResource("1_jirua")]
 position = Vector2(559, 359)
@@ -55,3 +56,6 @@ layer_1/y_sort_enabled = false
 layer_1/y_sort_origin = 0
 layer_1/z_index = 0
 layer_1/tile_data = PackedInt32Array()
+
+[node name="Enemy" parent="." instance=ExtResource("4_3qn2d")]
+position = Vector2(306, 84)

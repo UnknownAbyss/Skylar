@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://brf7s4ojw8xi0"]
+
+[ext_resource type="Script" path="res://scripts/Entity/Enemy.gd" id="1_6qf1a"]
+[ext_resource type="Script" path="res://scripts/Entity/EnemyBody.gd" id="1_jg5is"]
+[ext_resource type="Shader" path="res://shaders/Whiten.gdshader" id="2_hnlo0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ybq0d"]
+size = Vector2(64, 64)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8k244"]
+shader = ExtResource("2_hnlo0")
+shader_parameter/active = false
+
+[sub_resource type="Gradient" id="Gradient_07kih"]
+offsets = PackedFloat32Array(0.019802, 0.311881, 0.514852, 0.658416)
+colors = PackedColorArray(0.351485, 0.351485, 0.351485, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0.930607, 0.683289, 0.3008, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6ip4t"]
+gradient = SubResource("Gradient_07kih")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0.00609756, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_78mi7"]
+size = Vector2(48, 48)
+
+[node name="CharacterBody2D" type="CharacterBody2D" node_paths=PackedStringArray("entity")]
+script = ExtResource("1_jg5is")
+entity = NodePath("Enemy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ybq0d")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="Enemy" type="Area2D" parent="."]
+script = ExtResource("1_6qf1a")
+
+[node name="Sprite" type="Sprite2D" parent="Enemy"]
+material = SubResource("ShaderMaterial_8k244")
+position = Vector2(-2.38419e-07, -1.43051e-06)
+scale = Vector2(0.75, 0.75)
+texture = SubResource("GradientTexture2D_6ip4t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+shape = SubResource("RectangleShape2D_78mi7")
+debug_color = Color(0.847059, 0.34902, 0.380392, 0.419608)
